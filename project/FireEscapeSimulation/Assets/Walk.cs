@@ -43,41 +43,47 @@ public class Walk : MonoBehaviour
         if (!SubWayManager.instance.gameOver)
         {
             WriteData(transform.position.x.ToString() + ", " + transform.position.z.ToString());
-            if (Input.GetKeyDown("joystick button 14"))
+            if (Input.GetKeyDown("joystick button 15"))
             {
-                if (isMove)
-                {
-                    isMove = false;
-                }
-                else
-                {
-                    forward = child.transform.forward;
-                    isMove = true;
-                }
+                Debug.Log("눌림");
+                forward = child.transform.forward;
+                isMove = true;
+                nav.isStopped = false;
+            }
+            if (Input.GetKeyUp("joystick button 15"))
+            {
+                Debug.Log("떨어짐");
+                isMove = false;
+                nav.isStopped = true;
             }
             if (isMove)
+            {
                 nav.SetDestination(transform.position + forward);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "StairSignal")
+        if (other.gameObject.tag == "StairSignal")
         {
-            if (!upStair)
-            {
-                nav.speed = 0.25f;
-                upStair = true;
-            }
-            else
-            {
-                nav.speed = 1;
-                upStair = false;
-            }
+            nav.speed = 0.25f;
+            upStair = true;
         }
         if(other.gameObject.tag == "Exit")
         {
             SubWayManager.instance.canExit = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "StairSignal")
+        {
+
+            nav.speed = 1;
+            upStair = false;
+
         }
     }
 }

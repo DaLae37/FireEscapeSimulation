@@ -1,0 +1,25 @@
+import turtle
+turtle.colormode(255)
+color_list = [(255,255,0), (0,255,0), (255,125,0), (200,200, 200), (255,255,255)]
+t = turtle.Turtle()
+s = turtle.Screen()
+s.setup(700,700)
+s.bgpic('root_resize.png')
+
+f = list()
+for i in range(1,6) :
+    f.append(open("./data/yp{}.txt".format(i), "r", encoding = "utf-16"))
+t.hideturtle()
+t.pensize(2)
+t.penup()
+oz = 0
+for j in f :
+    t.color(color_list[oz])
+    oz+=1
+    for i in j :
+        x = i[0 : i.index(",")]
+        z = i[i.index(",") + 2 : len(i) -1]
+        t.goto(float(x) * 5 + 220, float(z) * 5 -15)
+        t.pendown()
+    t.penup()
+f.close();
