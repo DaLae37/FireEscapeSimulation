@@ -11,7 +11,7 @@ public class Walk : MonoBehaviour
     NavMeshAgent nav;
     Vector3 forward;
     Transform child;
-    bool isMove, upStair;
+    bool isMove;
 
     string m_strPath = "Assets/";
 
@@ -34,7 +34,7 @@ public class Walk : MonoBehaviour
         instance = this;
         nav = GetComponent<NavMeshAgent>();
         child = transform.GetChild(0);
-        isMove = upStair = false;
+        isMove = false;
     }
 
     // Update is called once per frame
@@ -45,30 +45,23 @@ public class Walk : MonoBehaviour
             WriteData(transform.position.x.ToString() + ", " + transform.position.z.ToString());
             if (Input.GetKeyDown("joystick button 15"))
             {
-                Debug.Log("눌림");
                 forward = child.transform.forward;
                 isMove = true;
-                nav.isStopped = false;
             }
-            if (Input.GetKeyUp("joystick button 15"))
+            else if(Input.GetKeyUp("joystick button 15"))
             {
-                Debug.Log("떨어짐");
                 isMove = false;
-                nav.isStopped = true;
             }
             if (isMove)
-            {
                 nav.SetDestination(transform.position + forward);
-            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "StairSignal")
+        if(other.gameObject.tag == "StairSignal")
         {
-            nav.speed = 0.25f;
-            upStair = true;
+                nav.speed = 0.25f;
         }
         if(other.gameObject.tag == "Exit")
         {
@@ -78,12 +71,9 @@ public class Walk : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "StairSignal")
+        if(other.gameObject.tag == "StairSignal")
         {
-
-            nav.speed = 1;
-            upStair = false;
-
+                nav.speed = 1;
         }
     }
 }
