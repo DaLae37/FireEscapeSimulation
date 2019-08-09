@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SubWayManager : MonoBehaviour
 {
     public static SubWayManager instance;
-    Stopwatch sw = new Stopwatch();
+    public Stopwatch sw = new Stopwatch();
     public bool gameOver, canExit, isFire, secondFire;
 
     // Start is called before the first frame update
@@ -15,7 +15,6 @@ public class SubWayManager : MonoBehaviour
         instance = this;
         gameOver = canExit = false;
         isFire = false;
-        sw.Start();
     }
 
     // Update is called once per frame

@@ -93,6 +93,7 @@ public class Walk : MonoBehaviour
         if (other.gameObject.tag == "FireStart")
         {
             SubWayManager.instance.isFire = true;
+            SubWayManager.instance.sw.Start();
             SoundManager.instance.BuzzSiren();
             fire1.SetActive(true);
             fire2.SetActive(true);
